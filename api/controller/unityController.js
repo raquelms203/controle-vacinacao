@@ -1,4 +1,4 @@
-Unity = require("../model/unityController");
+Unity = require("../model/unityModel");
 functions = require("../utils/functions");
 
 exports.index = function (_, res) {

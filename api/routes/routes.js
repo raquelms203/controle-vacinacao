@@ -28,6 +28,8 @@ Router.route("/register/:register_id")
   .put(registerController.update)
   .delete(registerController.delete);
 
+Router.route("/doses").get(registerController.getDoses);
+
 Router.route("/unities").get(unityController.index).post(unityController.new);
 
 Router.route("/unity/:unity_id")

@@ -1,4 +1,4 @@
-Person = require("../model/personController");
+Person = require("../model/personModel");
 functions = require("../utils/functions");
 
 exports.index = function (_, res) {

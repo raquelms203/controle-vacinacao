@@ -13,6 +13,10 @@ var registerSchema = mongoose.Schema({
     require: true,
     type: String,
   },
+  dose: {
+    require: true,
+    type: Number,
+  },
   date: {
     require: false,
     type: Date,

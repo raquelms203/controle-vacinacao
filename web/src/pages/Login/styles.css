@@ -1,0 +1,11 @@
+.login-container {
+  width: 40% !important;
+  margin: auto !important;
+  padding: 40px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}

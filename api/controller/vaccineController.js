@@ -1,4 +1,4 @@
-Vaccine = require("../model/vaccineController");
+Vaccine = require("../model/vaccineModel");
 functions = require("../utils/functions");
 
 exports.index = function (_, res) {

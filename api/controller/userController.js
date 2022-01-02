@@ -1,4 +1,4 @@
-User = require("../model/registerController");
+User = require("../model/userModel");
 functions = require("../utils/functions");
 
 exports.index = function (_, res) {
