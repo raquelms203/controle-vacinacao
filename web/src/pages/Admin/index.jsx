@@ -3,6 +3,7 @@ import { useState } from "react";
 import Students from "../Persons";
 import Unities from "../Unities";
 import Vaccine from "../Vaccines";
+import Registers from "../Registers";
 
 export default function Admin() {
   const [value, setValue] = useState(0);
@@ -19,7 +20,7 @@ export default function Admin() {
       case 2:
         return <Unities />;
       case 3:
-        return <div></div>;
+        return <Registers />;
       default:
         return <></>;
     }
@@ -41,7 +42,7 @@ export default function Admin() {
         onChange={handleChange}
         sx={{ borderRight: 1, borderColor: "divider" }}
       >
-        <Tab label="Pessoas" />
+        <Tab label="Pacientes" />
         <Tab label="Vacinas" />
         <Tab label="Unidades" />
         <Tab label="Registro" />

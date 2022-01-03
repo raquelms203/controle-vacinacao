@@ -1,5 +1,7 @@
 Register = require("../model/registerModel");
 Vaccine = require("../model/vaccineModel");
+Person = require("../model/personModel");
+Unity = require("../model/unityModel");
 functions = require("../utils/functions");
 
 exports.index = function (_, res) {
@@ -13,11 +15,30 @@ exports.index = function (_, res) {
       registers.sort(function (a, b) {
         return new Date(b.date) - new Date(a.date);
       });
-      res.json({
-        status: "success",
-        message: "ok",
-        data: registers,
-      });
+      for (let i = 0; i < registers.length; i++) {
+        Person.findById(registers[i].person_id, function (e_rPerson, person) {
+          if (person) registers[i].person_name = person.name;
+          Vaccine.findById(registers[i].vaccine_id, function (_, vaccine) {
+            if (vaccine) {
+              registers[i].vaccine_name = vaccine.name;
+              if (registers[i].dose === 0) registers[i].dose_taken = `1 / 1`;
+              else
+                registers[
+                  i
+                ].dose_taken = `${registers[i].dose} / ${vaccine.dose}`;
+            }
+            Unity.findById(registers[i].unity_id, function (_, unity) {
+              if (unity) registers[i].unity_name = unity.name;
+              if (i === registers.length - 1)
+                res.json({
+                  status: "success",
+                  message: "ok",
+                  data: registers,
+                });
+            });
+          });
+        });
+      }
     }
   });
 };

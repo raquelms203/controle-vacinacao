@@ -195,7 +195,10 @@ export default function Persons() {
         hideFooter
       />
       <Dialog
-        onClose={() => setOpenEdit(false)}
+        onClose={() => {
+          setOpenEdit(false);
+          setPerson({});
+        }}
         open={openEdit}
         maxWidth="md"
         fullWidth

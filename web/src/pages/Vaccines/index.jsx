@@ -150,7 +150,10 @@ export default function Vaccines() {
         hideFooter
       />
       <Dialog
-        onClose={() => setOpenEdit(false)}
+        onClose={() => {
+          setOpenEdit(false);
+          setVaccine();
+        }}
         open={openEdit}
         maxWidth="md"
         fullWidth

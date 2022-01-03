@@ -13,9 +13,25 @@ var registerSchema = mongoose.Schema({
     require: true,
     type: String,
   },
+  person_name: {
+    require: false,
+    type: String,
+  },
+  unity_name: {
+    require: false,
+    type: String,
+  },
+  vaccine_name: {
+    require: false,
+    type: String,
+  },
   dose: {
     require: true,
     type: Number,
+  },
+  dose_taken: {
+    require: false,
+    type: String,
   },
   date: {
     require: false,

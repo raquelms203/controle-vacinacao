@@ -10,7 +10,6 @@ import {
 import { DataGrid } from "@material-ui/data-grid";
 import { useEffect, useCallback, useState } from "react";
 import unityService from "../../services/unityService";
-import { formatDate } from "../../utils/functions";
 import { Delete, Edit } from "@material-ui/icons";
 import InputMask from "react-input-mask";
 
@@ -139,7 +138,10 @@ export default function Unities() {
         hideFooter
       />
       <Dialog
-        onClose={() => setOpenEdit(false)}
+        onClose={() => {
+          setOpenEdit(false);
+          setUnity();
+        }}
         open={openEdit}
         maxWidth="md"
         fullWidth
