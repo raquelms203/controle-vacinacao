@@ -1,6 +1,6 @@
 import { Box, Tab, Tabs } from "@material-ui/core";
 import { useState } from "react";
-import Students from "../Students";
+import Students from "../Persons";
 import Subject from "../Subjects";
 
 export default function Admin() {
@@ -8,6 +8,19 @@ export default function Admin() {
   const handleChange = (_, newValue) => {
     setValue(newValue);
   };
+
+  function TabActive() {
+    switch (value) {
+      case 0:
+        return <Students />;
+      case 1:
+        return <Subject />;
+      case 2:
+        return <div></div>;
+      case 3:
+        return <div></div>;
+    }
+  }
 
   return (
     <Box
@@ -25,10 +38,12 @@ export default function Admin() {
         onChange={handleChange}
         sx={{ borderRight: 1, borderColor: "divider" }}
       >
-        <Tab label="Alunos" />
-        <Tab label="Matrículas" />
+        <Tab label="Pessoas" />
+        <Tab label="Vacinas" />
+        <Tab label="Unidades" />
+        <Tab label="Registro" />
       </Tabs>
-      {value === 0 ? <Students /> : <Subject />}
+      <TabActive />
     </Box>
   );
 }

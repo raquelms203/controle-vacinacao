@@ -1,0 +1,7 @@
+.row-graph {
+  display: flex;
+  height: 400px !important;
+  padding: 40px;
+  justify-content: center;
+  gap: 100px;
+}

@@ -1,47 +1,47 @@
 import Axios from "./axios-config";
 
-const requestService = {
+const personService = {
   getList: async () => {
     let response;
     try {
-      response = await Axios.get("/requests");
+      response = await Axios.get("/persons");
     } catch (e) {
       return null;
     }
     return response.data;
   },
-  getRequest: async (id) => {
+  getPerson: async (id) => {
     let response;
     try {
-      response = await Axios.get("/request/" + id);
+      response = await Axios.get("/person/" + id);
     } catch (e) {
       return null;
     }
     return response.data;
   },
 
-  addRequest: async (json) => {
+  addPerson: async (json) => {
     let response;
     try {
-      response = await Axios.post("/requests", json);
+      response = await Axios.post("/persons", json);
     } catch (e) {
       return null;
     }
     return response.data;
   },
-  editRequest: async (id, json) => {
+  editPerson: async (id, json) => {
     let response;
     try {
-      response = await Axios.put("/request/" + id, json);
+      response = await Axios.put("/person/" + id, json);
     } catch (e) {
       return null;
     }
     return response.data;
   },
-  deleteRequest: async (id) => {
+  deletePerson: async (id) => {
     let response;
     try {
-      response = await Axios.delete("/request/" + id);
+      response = await Axios.delete("/person/" + id);
     } catch (e) {
       return null;
     }
@@ -49,4 +49,4 @@ const requestService = {
   },
 };
 
-export default requestService;
+export default personService;

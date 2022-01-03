@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import { useEffect, useCallback, useState } from "react";
-import subjectService from "../../services/subjectService";
+//import subjectService from "../../services/subjectService";
 import { formatDate, formatPrice } from "../../utils/functions";
 import { Delete, Edit } from "@material-ui/icons";
 
@@ -91,10 +91,10 @@ export default function Subjects() {
   ];
 
   const fetchSubjects = useCallback(async () => {
-    const response = await subjectService.getList();
-    if (response !== null) {
-      setRows(response.data || []);
-    }
+    // const response = await subjectService.getList();
+    // if (response !== null) {
+    //   setRows(response.data || []);
+    // }
   }, [setRows]);
 
   function handleEdit(id) {
@@ -103,22 +103,22 @@ export default function Subjects() {
   }
 
   async function handleDelete(id) {
-    const response = await subjectService.deleteSubject(id);
-    if (response !== null) {
-      await fetchSubjects();
-    } else alert("Ocorreu um erro");
-    setSubject();
+    // const response = await subjectService.deleteSubject(id);
+    // if (response !== null) {
+    //   await fetchSubjects();
+    // } else alert("Ocorreu um erro");
+    // setSubject();
   }
 
   async function updateSubject() {
-    let response = await subjectService.editSubject(idEdit, subject);
-    if (response === null) alert("Ocorreu um erro");
-    setSubject();
+    // let response = await subjectService.editSubject(idEdit, subject);
+    // if (response === null) alert("Ocorreu um erro");
+    // setSubject();
   }
 
   async function addSubject() {
-    let response = await subjectService.addSubject(subject);
-    if (response === null) alert("Ocorreu um erro");
+    // let response = await subjectService.addSubject(subject);
+    // if (response === null) alert("Ocorreu um erro");
   }
 
   useEffect(() => {

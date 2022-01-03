@@ -31,7 +31,7 @@ exports.getDoses = function (_, res) {
         second_dose: 0,
         total: 0,
       };
-      var vaccines = { total: registers.length };
+      var vaccines = {};
       function calculateValues() {
         for (let i = 0; i < registers.length; i++) {
           let register = registers[i];
@@ -72,14 +72,18 @@ exports.getDoses = function (_, res) {
                 name: vaccine.name,
                 quantity: quantity,
                 percentage:
-                  vaccines.total !== 0 ? quantity / vaccines.total : 1,
+                  registers.length !== 0 ? quantity / registers.length : 1,
               },
             };
             if (i === registers.length - 1)
               res.json({
                 status: "success",
                 message: "ok",
-                data: { quantities, vaccines },
+                data: {
+                  quantities,
+                  vaccines,
+                  total_vaccines: registers.length,
+                },
               });
           });
         }
