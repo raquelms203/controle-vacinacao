@@ -2,10 +2,7 @@ import { useEffect, useCallback, useState } from "react";
 import registerService from "../../services/registerService";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import randomColors from "randomcolor";
 import "./styles.css";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -15,7 +12,7 @@ export default function Home() {
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [totalVaccines, setTotalVaccines] = useState(0);
   const [listPercentage, setListPercentage] = useState(0);
-  var colorArray = [
+  const colorArray = [
     "#FF6633",
     "#FFB399",
     "#FF33FF",
@@ -67,7 +64,7 @@ export default function Home() {
       let listQuantities = [];
       let listPercentage = [];
 
-      for (var [_, value] of Object.entries(dataVaccines)) {
+      for (var [, value] of Object.entries(dataVaccines)) {
         listNames.push(value.name);
         listQuantities.push(value.quantity);
         listPercentage.push(value.percentage);
@@ -91,6 +88,7 @@ export default function Home() {
       setListPercentage(listPercentage);
       setGraphVaccines(dataGraphVaccines);
     }
+    //eslint-disable-next-line
   }, [
     setGraphQuantities,
     setTotalQuantities,
@@ -118,7 +116,15 @@ export default function Home() {
             <strong style={{ color: item }}>
               {graphQuantities.labels[index]}:
             </strong>
-            <span> {graphQuantities.datasets[0].data[index]}</span>
+            <span>
+              {" "}
+              {graphQuantities.datasets[0].data[index]} (
+              {Math.round(
+                (graphQuantities.datasets[0].data[index] / totalQuantities) *
+                  100
+              )}
+              %)
+            </span>
           </div>
         ))}
 

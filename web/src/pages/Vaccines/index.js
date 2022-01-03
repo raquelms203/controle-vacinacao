@@ -9,86 +9,44 @@ import {
 } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import { useEffect, useCallback, useState } from "react";
-import personService from "../../services/personService";
+import vaccineService from "../../services/vaccineService";
 import { formatDate } from "../../utils/functions";
 import { Delete, Edit } from "@material-ui/icons";
 import InputMask from "react-input-mask";
-import "./styles.css";
 
-export default function Persons() {
+export default function Vaccines() {
   const [rows, setRows] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
   const [idEdit, setIdEdit] = useState();
-  const [person, setPerson] = useState({});
+  const [vaccine, setVaccine] = useState({});
   const columns = [
     {
       field: "name",
       headerName: "Nome",
       align: "center",
       headerAlign: "center",
-      width: window.innerWidth * 0.13,
+      width: window.innerWidth * 0.18,
     },
     {
-      field: "district",
-      headerName: "Bairro",
+      field: "fabricator",
+      headerName: "Fabricante",
+      align: "center",
+      headerAlign: "center",
+      width: window.innerWidth * 0.18,
+    },
+    {
+      field: "country",
+      headerName: "País",
       align: "center",
       headerAlign: "center",
       width: window.innerWidth * 0.13,
     },
     {
-      field: "city",
-      headerName: "Cidade",
-      align: "center",
-      headerAlign: "center",
-      width: window.innerWidth * 0.13,
-      renderCell: (gridParams) => {
-        const { city, state } = gridParams.row;
-        return (
-          <div>
-            {city} - {state}
-          </div>
-        );
-      },
-    },
-    {
-      field: "birth_date",
-      headerName: "Data de Nascimento",
+      field: "dose",
+      headerName: "Doses",
       align: "center",
       headerAlign: "center",
       width: window.innerWidth * 0.14,
-      renderCell: (gridParams) => {
-        const { birth_date } = gridParams.row;
-        return <div>{formatDate(birth_date, false)}</div>;
-      },
-    },
-    {
-      field: "cpf",
-      headerName: "CPF",
-      align: "center",
-      headerAlign: "center",
-      width: window.innerWidth * 0.13,
-      renderCell: (gridParams) => {
-        const { cpf } = gridParams.row;
-        return (
-          <InputMask mask="999.999.999-99" value={cpf}>
-            {() => (
-              <TextField
-                size="small"
-                fullWidth
-                variant="standard"
-                InputProps={{
-                  disableUnderline: true,
-                  inputProps: {
-                    style: {
-                      textAlign: "center",
-                    },
-                  },
-                }}
-              ></TextField>
-            )}
-          </InputMask>
-        );
-      },
     },
     {
       field: "update_at",
@@ -106,19 +64,16 @@ export default function Persons() {
       headerName: "Opções",
       width: window.innerWidth * 0.13,
       renderCell: (gridParams) => {
-        const { name, birth_date, cpf, district, state, city, id } =
-          gridParams.row;
+        const { name, fabricator, country, dose, id } = gridParams.row;
         return (
           <div>
             <IconButton
               onClick={() => {
-                setPerson({
+                setVaccine({
                   name,
-                  birth_date,
-                  cpf,
-                  district,
-                  state,
-                  city,
+                  fabricator,
+                  country,
+                  dose,
                 });
                 handleEdit(id);
               }}
@@ -140,8 +95,8 @@ export default function Persons() {
     },
   ];
 
-  const fetchPersons = useCallback(async () => {
-    const response = await personService.getList();
+  const fetchVaccines = useCallback(async () => {
+    const response = await vaccineService.getList();
     if (response !== null) {
       setRows(response.data || []);
     }
@@ -153,25 +108,25 @@ export default function Persons() {
   }
 
   async function handleDelete(id) {
-    const response = await personService.deletePerson(id);
+    const response = await vaccineService.deleteVaccine(id);
     if (response !== null) {
-      await fetchPersons();
+      await fetchVaccines();
     } else alert("Ocorreu um erro");
   }
 
-  async function updatePerson() {
-    let response = await personService.editPerson(idEdit, person);
+  async function updateVaccine() {
+    let response = await vaccineService.editVaccine(idEdit, vaccine);
     if (response === null) alert("Ocorreu um erro");
   }
 
-  async function addPerson() {
-    let response = await personService.addPerson(person);
+  async function addVaccine() {
+    let response = await vaccineService.addVaccine(vaccine);
     if (response === null) alert("Ocorreu um erro");
   }
 
   useEffect(() => {
-    (async () => fetchPersons())();
-  }, [fetchPersons]);
+    (async () => fetchVaccines())();
+  }, [fetchVaccines]);
 
   return (
     <div>
@@ -207,23 +162,23 @@ export default function Persons() {
                 <TextField
                   fullWidth
                   label="Nome"
-                  defaultValue={person?.name}
+                  defaultValue={vaccine?.name}
                   size="small"
                   variant="outlined"
                   onChange={(event) => {
-                    setPerson({ ...person, name: event.target.value });
+                    setVaccine({ ...vaccine, name: event.target.value });
                   }}
                 />
               </Grid>
               <Grid item xs={6} sm={6} md={6}>
                 <TextField
                   fullWidth
-                  label="Bairro"
-                  defaultValue={person?.district}
+                  label="Fabricante"
+                  defaultValue={vaccine?.fabricator}
                   size="small"
                   variant="outlined"
                   onChange={(event) => {
-                    setPerson({ ...person, district: event.target.value });
+                    setVaccine({ ...vaccine, fabricator: event.target.value });
                   }}
                 />
               </Grid>
@@ -232,66 +187,32 @@ export default function Persons() {
               <Grid item xs={6} sm={6} md={6}>
                 <TextField
                   fullWidth
-                  label="Cidade"
-                  defaultValue={person?.city}
+                  label="País"
+                  defaultValue={vaccine?.country}
                   size="small"
                   variant="outlined"
                   onChange={(event) => {
-                    setPerson({ ...person, city: event.target.value });
+                    setVaccine({ ...vaccine, country: event.target.value });
                   }}
                 />
               </Grid>
               <Grid item xs={6} sm={6} md={6}>
                 <InputMask
-                  mask="aa"
-                  value={person?.state}
+                  mask="9"
+                  defaultValue={vaccine?.dose}
                   onChange={(event) => {
-                    setPerson({ ...person, state: event.target.value });
+                    setVaccine({ ...vaccine, dose: event.target.value });
                   }}
                 >
                   {() => (
                     <TextField
                       fullWidth
-                      label="Estado"
+                      label="Doses"
                       size="small"
                       variant="outlined"
                     />
                   )}
                 </InputMask>
-              </Grid>
-            </Grid>
-            <Grid item container spacing={2}>
-              <Grid item xs={6} sm={6} md={6}>
-                <InputMask
-                  mask="999.999.999-99"
-                  defaultValue={person?.cpf}
-                  onChange={(event) => {
-                    setPerson({ ...person, cpf: event.target.value });
-                  }}
-                >
-                  {() => (
-                    <TextField
-                      fullWidth
-                      label="CPF"
-                      size="small"
-                      variant="outlined"
-                    />
-                  )}
-                </InputMask>
-              </Grid>
-              <Grid item xs={6} sm={6} md={6} style={{ marginTop: -22 }}>
-                <label htmlFor="date" className="input-date">
-                  Data de nascimento
-                </label>
-                <input
-                  id="date"
-                  style={{ height: 35, width: "100%" }}
-                  type="date"
-                  defaultValue={person?.birth_date?.substring(0, 10)}
-                  onChange={(event) => {
-                    setPerson({ ...person, birth_date: event.target.value });
-                  }}
-                />
               </Grid>
             </Grid>
           </Grid>
@@ -302,9 +223,9 @@ export default function Persons() {
           </Button>
           <Button
             onClick={async () => {
-              if (idEdit) await updatePerson();
-              else await addPerson();
-              await fetchPersons();
+              if (idEdit) await updateVaccine();
+              else await addVaccine();
+              await fetchVaccines();
               setOpenEdit(false);
             }}
             color="primary"
