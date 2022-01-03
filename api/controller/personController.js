@@ -8,12 +8,16 @@ exports.index = function (_, res) {
         status: "error",
         message: err,
       });
-    else
+    else {
+      persons.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+      });
       res.json({
         status: "success",
         message: "ok",
         data: persons,
       });
+    }
   });
 };
 

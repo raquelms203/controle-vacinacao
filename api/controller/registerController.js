@@ -9,12 +9,16 @@ exports.index = function (_, res) {
         status: "error",
         message: err,
       });
-    else
+    else {
+      registers.sort(function (a, b) {
+        return new Date(b.date) - new Date(a.date);
+      });
       res.json({
         status: "success",
         message: "ok",
         data: registers,
       });
+    }
   });
 };
 exports.getDoses = function (_, res) {
