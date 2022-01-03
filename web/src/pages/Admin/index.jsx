@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs } from "@material-ui/core";
 import { useState } from "react";
 import Students from "../Persons";
+import Unities from "../Unities";
 import Vaccine from "../Vaccines";
 
 export default function Admin() {
@@ -16,7 +17,7 @@ export default function Admin() {
       case 1:
         return <Vaccine />;
       case 2:
-        return <div></div>;
+        return <Unities />;
       case 3:
         return <div></div>;
       default:
