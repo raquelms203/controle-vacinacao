@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import personService from "../../services/personService";
 import { formatDate } from "../../utils/functions";
 import { Delete, Edit } from "@material-ui/icons";
@@ -140,13 +140,12 @@ export default function Persons() {
     },
   ];
 
-  const fetchPersons = useCallback(async () => {
+  async function fetchPersons() {
     const response = await personService.getList();
     if (response !== null) {
-      setRows(response.data || []);
+      setRows(response.data);
     }
-  }, [setRows]);
-
+  }
   function handleEdit(id) {
     setIdEdit(id);
     setOpenEdit(true);
@@ -156,7 +155,8 @@ export default function Persons() {
     const response = await personService.deletePerson(id);
     if (response !== null) {
       await fetchPersons();
-    } else alert("Ocorreu um erro");
+    } else
+      alert("Não foi possível deletar porque o paciente consta nos registros.");
   }
 
   async function updatePerson() {
@@ -170,7 +170,7 @@ export default function Persons() {
   }
 
   useEffect(() => {
-    (async () => fetchPersons())();
+    fetchPersons();
   }, [fetchPersons]);
 
   return (

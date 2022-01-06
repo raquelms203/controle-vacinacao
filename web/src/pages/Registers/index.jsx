@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import registerService from "../../services/registerService";
 import vaccineService from "../../services/vaccineService";
 import unityService from "../../services/unityService";
@@ -115,7 +115,7 @@ export default function Registers() {
     },
   ];
 
-  const fetchRegisters = useCallback(async () => {
+  async function fetchRegisters() {
     const response = await registerService.getList();
     const responseVaccine = await vaccineService.getList();
     const responseUnity = await unityService.getList();
@@ -126,7 +126,7 @@ export default function Registers() {
     if (responseVaccine !== null) setListVaccines(responseVaccine.data);
     if (responseUnity !== null) setListUnities(responseUnity.data);
     if (responsePerson !== null) setListPersons(responsePerson.data);
-  }, [setRows, setListVaccines, setListUnities, setListPersons]);
+  }
 
   function handleEdit(id) {
     setIdEdit(id);
@@ -151,8 +151,9 @@ export default function Registers() {
   }
 
   useEffect(() => {
-    (async () => fetchRegisters())();
-  }, [fetchRegisters]);
+    fetchRegisters();
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <div>
@@ -273,7 +274,7 @@ export default function Registers() {
                 <input
                   id="date"
                   style={{ height: 35, width: "100%" }}
-                  type="datetime-local"
+                  type="date"
                   defaultValue={register?.date?.substring(0, 10)}
                   onChange={(event) => {
                     setRegister({ ...register, date: event.target.value });

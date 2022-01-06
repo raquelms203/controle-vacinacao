@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import vaccineService from "../../services/vaccineService";
 import { formatDate } from "../../utils/functions";
 import { Delete, Edit } from "@material-ui/icons";
@@ -95,12 +95,12 @@ export default function Vaccines() {
     },
   ];
 
-  const fetchVaccines = useCallback(async () => {
+  async function fetchVaccines() {
     const response = await vaccineService.getList();
     if (response !== null) {
       setRows(response.data || []);
     }
-  }, [setRows]);
+  }
 
   function handleEdit(id) {
     setIdEdit(id);
@@ -111,7 +111,8 @@ export default function Vaccines() {
     const response = await vaccineService.deleteVaccine(id);
     if (response !== null) {
       await fetchVaccines();
-    } else alert("Ocorreu um erro");
+    } else
+      alert("Não foi possível deletar porque a vacina consta nos registros.");
   }
 
   async function updateVaccine() {
@@ -125,7 +126,7 @@ export default function Vaccines() {
   }
 
   useEffect(() => {
-    (async () => fetchVaccines())();
+    fetchVaccines();
   }, [fetchVaccines]);
 
   return (

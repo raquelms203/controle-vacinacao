@@ -1,5 +1,3 @@
-import { TrafficRounded } from "@material-ui/icons";
-
 export const { format: formatPrice } = new Intl.NumberFormat("pt-BR", {
   style: "currency",
   currency: "BRL",

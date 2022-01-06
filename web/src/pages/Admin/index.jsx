@@ -45,7 +45,7 @@ export default function Admin() {
         <Tab label="Pacientes" />
         <Tab label="Vacinas" />
         <Tab label="Unidades" />
-        <Tab label="Registro" />
+        <Tab label="Registros" />
       </Tabs>
       <TabActive />
     </Box>

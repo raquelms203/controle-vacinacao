@@ -1,4 +1,5 @@
 Person = require("../model/personModel");
+Register = require("../model/registerModel");
 functions = require("../utils/functions");
 
 exports.index = function (_, res) {
@@ -73,13 +74,23 @@ exports.update = function (req, res) {
 };
 
 exports.delete = function (req, res) {
-  Person.deleteOne(
-    {
-      _id: req.params.person_id,
-    },
-    function (err, _) {
-      if (err) res.send(err);
-      else res.json({ status: "ok", message: "person deleted" });
+  Register.find({ vaccine_id: req.params.person_id }, function (_, register) {
+    if (register) {
+      res.statusCode = 400;
+      res.json({
+        status: "error",
+        message: "can't delete because this person is in use on registers.",
+      });
+    } else {
+      Person.deleteOne(
+        {
+          _id: req.params.person_id,
+        },
+        function (err, _) {
+          if (err) res.send(err);
+          else res.json({ status: "ok", message: "person deleted" });
+        }
+      );
     }
-  );
+  });
 };

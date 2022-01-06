@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import unityService from "../../services/unityService";
 import { Delete, Edit } from "@material-ui/icons";
 import InputMask from "react-input-mask";
@@ -83,12 +83,12 @@ export default function Unities() {
     },
   ];
 
-  const fetchUnities = useCallback(async () => {
+  async function fetchUnities() {
     const response = await unityService.getList();
     if (response !== null) {
       setRows(response.data || []);
     }
-  }, [setRows]);
+  }
 
   function handleEdit(id) {
     setIdEdit(id);
@@ -99,7 +99,8 @@ export default function Unities() {
     const response = await unityService.deleteUnity(id);
     if (response !== null) {
       await fetchUnities();
-    } else alert("Ocorreu um erro");
+    } else
+      alert("Não foi possível deletar porque a unidade consta nos registros.");
   }
 
   async function updateUnity() {
@@ -113,7 +114,7 @@ export default function Unities() {
   }
 
   useEffect(() => {
-    (async () => fetchUnities())();
+    fetchUnities();
   }, [fetchUnities]);
 
   return (

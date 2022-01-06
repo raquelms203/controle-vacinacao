@@ -61,10 +61,10 @@ exports.getDoses = function (_, res) {
         for (let i = 0; i < registers.length; i++) {
           let register = registers[i];
           Vaccine.findById(register.vaccine_id, function (err, vaccine) {
-            if (err || vaccine === undefined) {
+            if (!vaccine) {
               res.send(err);
             }
-            let id = vaccine._id.toString();
+            let id = vaccine.id.toString();
             switch (register.dose) {
               case 0:
                 quantities = {
